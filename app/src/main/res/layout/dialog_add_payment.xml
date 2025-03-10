@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_payment_title"
+        android:textColor="@color/black"
+        android:layout_marginBottom="8dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/amountInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/square_edittext_background"
+        android:hint="@string/amount"
+        android:layout_marginBottom="10dp"
+        android:inputType="number"
+        android:padding="8dp" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/paymentTypeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_spinner_background" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/providerInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/square_edittext_background"
+        android:hint="@string/provider_icici_citibank_etc"
+        android:padding="8dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/transactionRefInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/square_edittext_background"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/transaction_reference"
+        android:padding="8dp"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_dark"
+            android:paddingHorizontal="10dp"
+            android:text="@string/cancel"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/okBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@color/material_dynamic_primary40"
+            android:paddingHorizontal="10dp"
+            android:text="@string/ok"
+            android:textColor="@color/white" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>
