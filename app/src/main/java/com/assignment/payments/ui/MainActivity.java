@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
     void updateUI(List<Payment> payments) {
         chipGroup.removeAllViews();
-        int total = 0;
+        double total = 0;
         for (Payment payment : payments) {
             total += payment.getAmount();
             Chip chip = new Chip(this);

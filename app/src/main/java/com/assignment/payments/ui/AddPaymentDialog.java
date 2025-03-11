@@ -111,7 +111,7 @@ public class AddPaymentDialog extends Dialog {
             return;
         }
 
-        if (Integer.parseInt(amountText) <= 0) {
+        if (Double.parseDouble(amountText) <= 0) {
             BaseUtils.showToast(getContext(), R.string.invalid_amount);
             return;
         }
@@ -126,7 +126,7 @@ public class AddPaymentDialog extends Dialog {
             return;
         }
 
-        Payment payment = new Payment(type.name(), Integer.parseInt(amountText), provider, transactionRef);
+        Payment payment = new Payment(type.name(), Double.parseDouble(amountText), provider, transactionRef);
         listener.onPaymentAdded(payment);
         dismiss();
     }

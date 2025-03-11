@@ -21,7 +21,7 @@
         android:background="@drawable/square_edittext_background"
         android:hint="@string/amount"
         android:layout_marginBottom="10dp"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:padding="8dp" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -61,7 +61,7 @@
             android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_red_dark"
+            android:background="@color/red"
             android:paddingHorizontal="10dp"
             android:text="@string/cancel"
             android:textColor="@color/white" />
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:background="@color/material_dynamic_primary40"
+            android:background="@color/button_color"
             android:paddingHorizontal="10dp"
             android:text="@string/ok"
             android:textColor="@color/white" />

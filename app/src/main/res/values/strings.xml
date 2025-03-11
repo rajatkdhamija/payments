@@ -18,8 +18,7 @@
     <string name="invalid_amount">Invalid amount</string>
     <string name="please_enter_a_provider">Please enter a provider</string>
     <string name="please_enter_a_transaction_reference">Please enter a transaction reference</string>
-    <string name="total_amount">Total: ₹ %d</string>
-    <string name="payment_details">%s: Rs. %d</string>
-
+    <string name="total_amount">Total: ₹ %.2f</string>
+    <string name="payment_details">%s: Rs. %.2f</string>
 
 </resources>
