@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private AppCompatTextView totalAmount;
     private ChipGroup chipGroup;
     private PaymentViewModel paymentViewModel;
+    private AddPaymentDialog addPaymentDialog;
 
     private PaymentRepository paymentRepository;
 
@@ -59,11 +60,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadPayments() {
-        List<Payment> payments = paymentRepository.loadPayments(this);
-        paymentViewModel.setPayments(payments);
+        paymentRepository.loadPayments(this, payments -> runOnUiThread(() -> {
+            paymentViewModel.setPayments(payments);
+        }));
     }
 
     private void openAddPaymentDialog() {
+        if (addPaymentDialog != null && addPaymentDialog.isShowing()) {
+            addPaymentDialog.dismiss();
+        }
         if (Objects.requireNonNull(paymentViewModel.getPayments().getValue()).size()
                 >= PaymentType.values().length) {
             BaseUtils.showToast(this, R.string.all_payment_types_have_already_been_added);
@@ -72,15 +77,15 @@ public class MainActivity extends AppCompatActivity {
 
         Set<PaymentType> usedTypes = new HashSet<>();
         for (Payment payment : Objects.requireNonNull(paymentViewModel.getPayments().getValue())) {
-            usedTypes.add(PaymentType.fromString(payment.getType()));
+            usedTypes.add(PaymentType.fromString(payment.getType(), this));
         }
 
-        AddPaymentDialog dialog = new AddPaymentDialog(
+        addPaymentDialog = new AddPaymentDialog(
                 this,
                 paymentViewModel::addPayment,
                 usedTypes
         );
-        dialog.show();
+        addPaymentDialog.show();
     }
 
     void updateUI(List<Payment> payments) {
@@ -91,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             Chip chip = new Chip(this);
             chip.setText(
                     getString(R.string.payment_details,
-                            PaymentType.fromString(payment.getType()),
+                            PaymentType.fromString(payment.getType(), this).getDisplayName(this),
                             payment.getAmount()
                     )
             );
@@ -102,4 +107,12 @@ public class MainActivity extends AppCompatActivity {
         totalAmount.setText(getString(R.string.total_amount, total));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (addPaymentDialog != null && addPaymentDialog.isShowing()) {
+            addPaymentDialog.dismiss();
+            addPaymentDialog = null;
+        }
+    }
 }

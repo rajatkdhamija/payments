@@ -29,6 +29,7 @@ public class AddPaymentDialog extends Dialog {
     private final PaymentListener listener;
 
     private final Set<PaymentType> usedTypes;
+    private List<PaymentType> availableTypes;
 
     public interface PaymentListener {
         void onPaymentAdded(Payment payment);
@@ -63,22 +64,12 @@ public class AddPaymentDialog extends Dialog {
         AppCompatButton savePaymentBtn = findViewById(R.id.okBtn);
         AppCompatButton cancelBtn = findViewById(R.id.cancelBtn);
 
-        List<PaymentType> availableTypes = new ArrayList<>();
-        for (PaymentType type : PaymentType.values()) {
-            if (!usedTypes.contains(type)) {
-                availableTypes.add(type);
-            }
-        }
-        ArrayAdapter<PaymentType> adapter = new ArrayAdapter<>(
-                getContext(),
-                android.R.layout.simple_spinner_dropdown_item,
-                availableTypes);
-        paymentTypeSpinner.setAdapter(adapter);
+        setupPaymentTypeSpinner();
 
         paymentTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                PaymentType selected = (PaymentType) paymentTypeSpinner.getSelectedItem();
+                PaymentType selected = availableTypes.get(position);
                 if (selected == PaymentType.BANK_TRANSFER || selected == PaymentType.CREDIT_CARD) {
                     providerInput.setVisibility(View.VISIBLE);
                     transactionRefInput.setVisibility(View.VISIBLE);
@@ -89,30 +80,54 @@ public class AddPaymentDialog extends Dialog {
             }
 
             @Override
-            public void onNothingSelected(android.widget.AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent) {
                 providerInput.setVisibility(View.GONE);
                 transactionRefInput.setVisibility(View.GONE);
             }
         });
 
-
         savePaymentBtn.setOnClickListener(v -> savePayment());
         cancelBtn.setOnClickListener(v -> dismiss());
     }
 
+    private void setupPaymentTypeSpinner() {
+        availableTypes = new ArrayList<>();
+        List<String> displayNames = new ArrayList<>();
+
+        for (PaymentType type : PaymentType.values()) {
+            if (!usedTypes.contains(type)) {
+                availableTypes.add(type);
+                displayNames.add(type.getDisplayName(getContext()));
+            }
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                getContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                displayNames
+        );
+        paymentTypeSpinner.setAdapter(adapter);
+    }
+
     private void savePayment() {
-        PaymentType type = (PaymentType) paymentTypeSpinner.getSelectedItem();
+        int selectedPosition = paymentTypeSpinner.getSelectedItemPosition();
+        PaymentType type = availableTypes.get(selectedPosition);
+
         String amountText = Objects.requireNonNull(amountInput.getText()).toString().trim();
         String provider = Objects.requireNonNull(providerInput.getText()).toString().trim();
         String transactionRef = Objects.requireNonNull(transactionRefInput.getText()).toString().trim();
 
-        if (amountText.isEmpty()) {
+        if (amountText.isEmpty() || amountText.equals(".")) {
             BaseUtils.showToast(getContext(), R.string.please_enter_an_amount);
             return;
         }
-
-        if (Double.parseDouble(amountText) <= 0) {
-            BaseUtils.showToast(getContext(), R.string.invalid_amount);
+        try {
+            if (Double.parseDouble(amountText) <= 0) {
+                BaseUtils.showToast(getContext(), R.string.invalid_amount);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            BaseUtils.showToast(getContext(), R.string.please_enter_an_amount);
             return;
         }
 

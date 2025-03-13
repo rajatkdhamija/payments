@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -8,9 +9,9 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="@string/add_payment_title"
         android:textColor="@color/black"
-        android:layout_marginBottom="8dp"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -18,9 +19,9 @@
         android:id="@+id/amountInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/square_edittext_background"
         android:hint="@string/amount"
-        android:layout_marginBottom="10dp"
         android:inputType="numberDecimal"
         android:padding="8dp" />
 
@@ -29,24 +30,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded_spinner_background" />
+        android:background="@drawable/rounded_spinner_background"
+        android:paddingEnd="36dp"
+        tools:ignore="RtlSymmetry" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/providerInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/square_edittext_background"
         android:hint="@string/provider_icici_citibank_etc"
         android:padding="8dp"
-        android:layout_marginBottom="10dp"
         android:visibility="gone" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/transactionRefInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/square_edittext_background"
         android:layout_marginBottom="10dp"
+        android:background="@drawable/square_edittext_background"
         android:hint="@string/transaction_reference"
         android:padding="8dp"
         android:visibility="gone" />

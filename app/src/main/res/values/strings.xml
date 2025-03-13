@@ -20,5 +20,8 @@
     <string name="please_enter_a_transaction_reference">Please enter a transaction reference</string>
     <string name="total_amount">Total: ₹ %.2f</string>
     <string name="payment_details">%s: Rs. %.2f</string>
+    <string name="payment_cash">Cash</string>
+    <string name="payment_bank_transfer">Bank Transfer</string>
+    <string name="payment_credit_card">Credit Card</string>
 
 </resources>

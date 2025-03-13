@@ -1,27 +1,34 @@
 package com.assignment.payments.model;
 
+import android.content.Context;
 import androidx.annotation.NonNull;
+import com.assignment.payments.R;
 
 public enum PaymentType {
-    CASH("Cash"),
-    BANK_TRANSFER("Bank Transfer"),
-    CREDIT_CARD("Credit Card");
+    CASH(R.string.payment_cash),
+    BANK_TRANSFER(R.string.payment_bank_transfer),
+    CREDIT_CARD(R.string.payment_credit_card);
 
-    private final String displayName;
+    private final int stringResId;
 
-    PaymentType(String displayName) {
-        this.displayName = displayName;
+    PaymentType(int stringResId) {
+        this.stringResId = stringResId;
+    }
+
+    public String getDisplayName(Context context) {
+        return context.getString(stringResId);
     }
 
     @NonNull
     @Override
     public String toString() {
-        return displayName;
+        throw new UnsupportedOperationException("Use getDisplayName(Context) instead");
     }
 
-    public static PaymentType fromString(String type) {
+    public static PaymentType fromString(String type, Context context) {
         for (PaymentType paymentType : values()) {
-            if (paymentType.name().equalsIgnoreCase(type) || paymentType.displayName.equalsIgnoreCase(type)) {
+            if (paymentType.name().equalsIgnoreCase(type) ||
+                    context.getString(paymentType.stringResId).equalsIgnoreCase(type)) {
                 return paymentType;
             }
         }
